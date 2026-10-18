@@ -1,0 +1,53 @@
+Fix Blank Values Imported as Empty Strings
+
+After importing orders.csv, run:
+
+SQL
+UPDATE orders
+SET discount_pct = NULL
+WHERE discount_pct = '';
+ 
+UPDATE orders
+SET rating = NULL
+WHERE rating = '';
+
+This is required for your Report (b):
+
+SQL
+SELECT
+COUNT(*) AS total_rows,
+COUNT(rating) AS rating_count,
+COUNT(*) - COUNT(rating) AS missing_ratings
+FROM orders;
+
+Expected:
+
+Plain Text
+180 | 165 | 15
+Recommended database_setup.sql
+SQL
+PRAGMA foreign_keys = ON;
+ 
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS customers;
+ 
+-- run CREATE TABLE statements here
+ 
+.mode csv
+ 
+.import --skip 1 data/customers.csv customers
+.import --skip 1 data/products.csv products
+.import --skip 1 data/orders.csv orders
+ 
+UPDATE orders
+SET discount_pct = NULL
+WHERE discount_pct = '';
+ 
+UPDATE orders
+SET rating = NULL
+WHERE rating = '';
+ 
+SELECT COUNT(*) FROM customers;
+SELECT COUNT(*) FROM products;
+SELECT COUNT(*) FROM orders;
