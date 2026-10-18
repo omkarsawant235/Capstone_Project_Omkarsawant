@@ -1,0 +1,7 @@
+1. Run schema.sql
+2. Run seed_data.sql
+3. Run validation.sql
+4. Run reports.sql
+5. Run analysis/clean_and_eda.py
+6. Run analysis/visualize.py
+7. Run narrator/generate_narrative.py
